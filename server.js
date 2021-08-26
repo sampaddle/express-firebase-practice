@@ -16,9 +16,20 @@ app.use(express.static("views"));
 
 app.set("views", __dirname + "/views");
 
+//give the server access to the user input
+app.use(express.json()); //Used to parse JSON bodies (instead of importing bodyparser)
+app.use(express.urlencoded({ extended: false })); //Parse URL-encoded bodies
+
 // home route
 app.get("/", function (req, res) {
   res.render("home.ejs");
+});
+
+app.post("/", function (req, res) {
+  // send back a page with yelled breakfast on it
+  // breakfast was what we named the input in ejs
+  const breakfast = req.body.breakfast;
+  res.render("results.ejs", { data: breakfast });
 });
 
 var port = 3000;
